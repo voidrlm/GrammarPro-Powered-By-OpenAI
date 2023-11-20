@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { TextField, Button, Container, Paper } from "@mui/material";
 
 function App() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,6 +35,16 @@ function App() {
       mode: themeMode,
     },
   });
+
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() !== "") {
+      setMessages([...messages, { text: newMessage, sender: "user" }]);
+      setNewMessage("");
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,10 +101,37 @@ function App() {
             </Menu>
           </Toolbar>
         </AppBar>
-        {/* The rest of your app content goes here */}
-        <div style={{ padding: "20px" }}>
-          <p>.</p>
-        </div>
+
+        <Container maxWidth="md" sx={{ marginTop: "20px" }}>
+          <Paper elevation={3} sx={{ padding: "20px", minHeight: "300px" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  style={{
+                    textAlign: message.sender === "user" ? "right" : "left",
+                  }}
+                >
+                  {message.text}
+                </div>
+              ))}
+            </div>
+          </Paper>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <TextField
+              label="Type a message..."
+              variant="outlined"
+              fullWidth
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <Button variant="contained" onClick={handleSendMessage}>
+              Send
+            </Button>
+          </div>
+        </Container>
       </div>
     </ThemeProvider>
   );
