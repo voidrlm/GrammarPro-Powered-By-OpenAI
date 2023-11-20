@@ -54,7 +54,6 @@ function App() {
   };
 
   const handleSaveApiKey = () => {
-    // You can perform additional validation here if needed
     localStorage.setItem("apiKey", apiKey);
     handleCloseKeyDialog();
   };
@@ -72,29 +71,26 @@ function App() {
       let newText = "\n \n \n Write this better.";
       let inputData = newMessage + newText;
 
-      // Set loading to true when making the API request
       setLoading(true);
 
-      // Make a request to OpenAI GPT-3.5 Chat API
       try {
         const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions", // GPT-3.5 Chat API endpoint
+          "https://api.openai.com/v1/chat/completions",
           {
             model: "gpt-3.5-turbo",
             messages: [
               { role: "system", content: "You are a helpful assistant." },
-              { role: "user", content: inputData }, // Use inputData here
+              { role: "user", content: inputData },
             ],
           },
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("apiKey")}`, // Use the stored API key
+              Authorization: `Bearer ${localStorage.getItem("apiKey")}`,
             },
           }
         );
 
-        // Handle the response from the API as needed
         console.log(response.data.choices[0].message.content);
         setMessages([
           ...messages,
@@ -105,16 +101,18 @@ function App() {
         ]);
         setNewMessage("");
       } catch (error) {
-        // Handle errors
         console.error("Error making API request:", error);
         setErrorMessage(
           "An error occurred while sending the message. Please try again."
-        ); // Set error message
+        );
       } finally {
-        // Set loading back to false after the request is complete (success or error)
         setLoading(false);
       }
     }
+  };
+
+  const handleAlertClose = () => {
+    setErrorMessage(null);
   };
 
   const theme = createTheme({
@@ -130,18 +128,34 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          backgroundColor: themeMode === "light" ? "#f5f5f5" : "#333",
+          color: themeMode === "light" ? "#333" : "#fff",
+        }}
       >
-        <AppBar position="static">
+        <AppBar
+          position="static"
+          sx={{ backgroundColor: themeMode === "light" ? "#fff" : "#424242" }}
+        >
           <Toolbar>
             <div style={{ flexGrow: 1 }}>
-              <Typography variant="h6" component="div">
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ color: themeMode === "light" ? "#333" : "#fff" }}
+              >
                 Grammar Pro
               </Typography>
               <Typography
                 variant="subtitle1"
                 color="inherit"
-                sx={{ fontSize: "12px" }}
+                sx={{
+                  fontSize: "12px",
+                  color: themeMode === "light" ? "#555" : "#ccc",
+                }}
               >
                 Powered by OpenAI
               </Typography>
@@ -181,7 +195,12 @@ function App() {
                   </>
                 )}
               </MenuItem>
-              <MenuItem onClick={handleOpenKeyDialog}>Enter API Key</MenuItem>
+              <MenuItem
+                onClick={handleOpenKeyDialog}
+                sx={{ color: themeMode === "light" ? "#333" : "#fff" }}
+              >
+                Enter API Key
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
@@ -206,6 +225,8 @@ function App() {
               flexDirection: "column",
               alignItems: "center",
               flexGrow: 1,
+              backgroundColor: themeMode === "light" ? "#fff" : "#424242",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
             {messages.map((message, index) => (
@@ -214,12 +235,21 @@ function App() {
                   style={{
                     textAlign: message.sender === "user" ? "right" : "left",
                     width: "100%",
+                    marginBottom: "10px",
+                    padding: "10px",
+                    backgroundColor: themeMode === "light" ? "#f0f0f0" : "#555",
+                    borderRadius: "5px",
+                    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
                   }}
                 >
                   {message.text}
                 </div>
                 {index < messages.length - 1 && (
-                  <Divider sx={{ margin: "10px 0" }} />
+                  <Divider
+                    sx={{
+                      backgroundColor: themeMode === "light" ? "#ddd" : "#777",
+                    }}
+                  />
                 )}
               </React.Fragment>
             ))}
@@ -232,6 +262,7 @@ function App() {
               flexDirection: "row",
               justifyContent: "flex-end",
               alignItems: "center",
+              marginTop: "20px",
             }}
           >
             <TextField
@@ -240,15 +271,34 @@ function App() {
               fullWidth
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              style={{ flex: 1, marginRight: "10px" }}
+              style={{
+                flex: 1,
+                marginRight: "10px",
+                backgroundColor: themeMode === "light" ? "#fff" : "#424242",
+                color: themeMode === "light" ? "#333" : "#fff",
+                borderRadius: "5px",
+              }}
             />
-            <Button type="submit" variant="contained" disabled={loading}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              sx={{
+                backgroundColor: themeMode === "light" ? "#2196F3" : "#64B5F6",
+                color: themeMode === "light" ? "#fff" : "#333",
+                borderRadius: "5px",
+              }}
+            >
               {loading ? "Sending..." : "Submit"}
             </Button>
           </form>
         </Container>
 
-        <Dialog open={openKeyDialog} onClose={handleCloseKeyDialog}>
+        <Dialog
+          open={openKeyDialog}
+          onClose={handleCloseKeyDialog}
+          sx={{ color: themeMode === "light" ? "#333" : "#fff" }}
+        >
           <DialogTitle>Enter API Key</DialogTitle>
           <DialogContent>
             <TextField
