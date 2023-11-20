@@ -61,12 +61,17 @@ function App() {
     setApiKey(e.target.value);
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
     if (newMessage.trim() !== "") {
       let newText = "\n \n \n Write this better.";
       let inputData = newMessage + newText;
+
+      // Set loading to true when making the API request
+      setLoading(true);
 
       // Make a request to OpenAI GPT-3.5 Chat API
       try {
@@ -100,6 +105,9 @@ function App() {
       } catch (error) {
         // Handle errors
         console.error("Error making API request:", error);
+      } finally {
+        // Set loading back to false after the request is complete (success or error)
+        setLoading(false);
       }
     }
   };
@@ -225,8 +233,8 @@ function App() {
               onChange={(e) => setNewMessage(e.target.value)}
               style={{ flex: 1, marginRight: "10px" }}
             />
-            <Button type="submit" variant="contained">
-              Submit
+            <Button type="submit" variant="contained" disabled={loading}>
+              {loading ? "Sending..." : "Submit"}
             </Button>
           </form>
         </Container>
