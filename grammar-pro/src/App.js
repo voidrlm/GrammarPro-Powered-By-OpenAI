@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Alert,
 } from "@mui/material";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   const [themeMode, setThemeMode] = useState("light");
   const [openKeyDialog, setOpenKeyDialog] = useState(false);
   const [apiKey, setApiKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,11 +107,18 @@ function App() {
       } catch (error) {
         // Handle errors
         console.error("Error making API request:", error);
+        setErrorMessage(
+          "An error occurred while sending the message. Please try again."
+        ); // Set error message
       } finally {
         // Set loading back to false after the request is complete (success or error)
         setLoading(false);
       }
     }
+  };
+
+  const handleAlertClose = () => {
+    setErrorMessage(null);
   };
 
   const theme = createTheme({
@@ -259,6 +268,21 @@ function App() {
             </Button>
           </DialogActions>
         </Dialog>
+
+        {/* Display error message using Alert */}
+        <Alert
+          severity="error"
+          onClose={handleAlertClose}
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "80%",
+          }}
+        >
+          {errorMessage}
+        </Alert>
       </div>
     </ThemeProvider>
   );
