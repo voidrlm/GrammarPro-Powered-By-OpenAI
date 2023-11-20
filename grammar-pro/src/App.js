@@ -134,11 +134,16 @@ function App() {
           minHeight: "100vh",
           backgroundColor: themeMode === "light" ? "#f5f5f5" : "#333",
           color: themeMode === "light" ? "#333" : "#fff",
+          borderRadius: "10px",
+          overflow: "hidden",
         }}
       >
         <AppBar
           position="static"
-          sx={{ backgroundColor: themeMode === "light" ? "#fff" : "#424242" }}
+          sx={{
+            backgroundColor: themeMode === "light" ? "#fff" : "#424242",
+            borderRadius: "10px 10px 0 0",
+          }}
         >
           <Toolbar>
             <div style={{ flexGrow: 1 }}>
@@ -227,6 +232,7 @@ function App() {
               flexGrow: 1,
               backgroundColor: themeMode === "light" ? "#fff" : "#424242",
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              borderRadius: "10px",
             }}
           >
             {messages.map((message, index) => (
@@ -238,7 +244,7 @@ function App() {
                     marginBottom: "10px",
                     padding: "10px",
                     backgroundColor: themeMode === "light" ? "#f0f0f0" : "#555",
-                    borderRadius: "5px",
+                    borderRadius: "10px",
                     boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
                   }}
                 >
@@ -276,8 +282,9 @@ function App() {
                 marginRight: "10px",
                 backgroundColor: themeMode === "light" ? "#fff" : "#424242",
                 color: themeMode === "light" ? "#333" : "#fff",
-                borderRadius: "5px",
+                borderRadius: "10px",
               }}
+              sx={{ borderRadius: "10px" }}
             />
             <Button
               type="submit"
@@ -286,7 +293,7 @@ function App() {
               sx={{
                 backgroundColor: themeMode === "light" ? "#2196F3" : "#64B5F6",
                 color: themeMode === "light" ? "#fff" : "#333",
-                borderRadius: "5px",
+                borderRadius: "10px",
               }}
             >
               {loading ? "Sending..." : "Submit"}
@@ -297,7 +304,10 @@ function App() {
         <Dialog
           open={openKeyDialog}
           onClose={handleCloseKeyDialog}
-          sx={{ color: themeMode === "light" ? "#333" : "#fff" }}
+          sx={{
+            color: themeMode === "light" ? "#333" : "#fff",
+            borderRadius: "10px",
+          }}
         >
           <DialogTitle>Enter API Key</DialogTitle>
           <DialogContent>
