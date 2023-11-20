@@ -10,13 +10,24 @@ import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { TextField, Button, Container, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
 function App() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const [themeMode, setThemeMode] = useState("light");
+  const [openKeyDialog, setOpenKeyDialog] = useState(false);
+  const [apiKey, setApiKey] = useState("");
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +40,24 @@ function App() {
   const handleToggleTheme = () => {
     setThemeMode((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
     handleMenuClose();
+  };
+
+  const handleOpenKeyDialog = () => {
+    setOpenKeyDialog(true);
+  };
+
+  const handleCloseKeyDialog = () => {
+    setOpenKeyDialog(false);
+  };
+
+  const handleSaveApiKey = () => {
+    // You can perform additional validation here if needed
+    localStorage.setItem("apiKey", apiKey);
+    handleCloseKeyDialog();
+  };
+
+  const handleApiKeyChange = (e) => {
+    setApiKey(e.target.value);
   };
 
   const theme = createTheme({
@@ -104,6 +133,7 @@ function App() {
                   </>
                 )}
               </MenuItem>
+              <MenuItem onClick={handleOpenKeyDialog}>Enter API Key</MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
@@ -165,6 +195,27 @@ function App() {
             </Button>
           </form>
         </Container>
+
+        <Dialog open={openKeyDialog} onClose={handleCloseKeyDialog}>
+          <DialogTitle>Enter API Key</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="API Key"
+              variant="outlined"
+              fullWidth
+              value={apiKey}
+              onChange={handleApiKeyChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseKeyDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSaveApiKey} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </ThemeProvider>
   );
