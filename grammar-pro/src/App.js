@@ -10,9 +10,13 @@ function App() {
         <Toolbar>
           <div>
             <Typography variant="h6" component="div">
-              Grammar Pro
+              GrammarPro
             </Typography>
-            <Typography variant="subtitle1" color="inherit">
+            <Typography
+              variant="subtitle1"
+              color="inherit"
+              sx={{ fontSize: "12px" }}
+            >
               Powered by OpenAI
             </Typography>
           </div>
