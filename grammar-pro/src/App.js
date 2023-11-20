@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -50,8 +51,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div
-        style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
         <AppBar position="static">
           <Toolbar>
@@ -106,34 +108,49 @@ function App() {
           </Toolbar>
         </AppBar>
 
-        <Container maxWidth="md" sx={{ marginTop: "20px", flex: 1 }}>
+        <Container
+          component="main"
+          maxWidth="xs"
+          sx={{
+            marginTop: "20px",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Paper
             elevation={3}
-            sx={{ padding: "20px", minHeight: "300px", height: "100%" }}
+            sx={{
+              width: "100%",
+              padding: "20px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              flexGrow: 1,
+            }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                height: "100%",
-              }}
-            >
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  style={{
-                    textAlign: message.sender === "user" ? "right" : "left",
-                  }}
-                >
-                  {message.text}
-                </div>
-              ))}
-            </div>
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                style={{
+                  textAlign: message.sender === "user" ? "right" : "left",
+                  width: "100%",
+                }}
+              >
+                {message.text}
+              </div>
+            ))}
           </Paper>
           <form
             onSubmit={handleSendMessage}
-            style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
           >
             <TextField
               label="Type a message..."
@@ -141,6 +158,7 @@ function App() {
               fullWidth
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              style={{ flex: 1, marginRight: "10px" }}
             />
             <Button type="submit" variant="contained">
               Submit
