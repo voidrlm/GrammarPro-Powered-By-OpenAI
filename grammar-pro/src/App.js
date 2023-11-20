@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Divider,
 } from "@mui/material";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   const [themeMode, setThemeMode] = useState("light");
   const [openKeyDialog, setOpenKeyDialog] = useState(false);
   const [apiKey, setApiKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,6 +82,7 @@ function App() {
           {
             model: "gpt-3.5-turbo",
             messages: [
+              { role: "system", content: "You are a helpful assistant." },
               { role: "user", content: inputData }, // Use inputData here
             ],
           },
@@ -104,6 +107,9 @@ function App() {
       } catch (error) {
         // Handle errors
         console.error("Error making API request:", error);
+        setErrorMessage(
+          "An error occurred while sending the message. Please try again."
+        ); // Set error message
       } finally {
         // Set loading back to false after the request is complete (success or error)
         setLoading(false);
@@ -203,15 +209,19 @@ function App() {
             }}
           >
             {messages.map((message, index) => (
-              <div
-                key={index}
-                style={{
-                  textAlign: message.sender === "user" ? "right" : "left",
-                  width: "100%",
-                }}
-              >
-                {message.text}
-              </div>
+              <React.Fragment key={index}>
+                <div
+                  style={{
+                    textAlign: message.sender === "user" ? "right" : "left",
+                    width: "100%",
+                  }}
+                >
+                  {message.text}
+                </div>
+                {index < messages.length - 1 && (
+                  <Divider sx={{ margin: "10px 0" }} />
+                )}
+              </React.Fragment>
             ))}
           </Paper>
           <form
