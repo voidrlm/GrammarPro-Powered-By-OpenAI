@@ -50,7 +50,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
+      <div
+        style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+      >
         <AppBar position="static">
           <Toolbar>
             <div style={{ flexGrow: 1 }}>
@@ -104,10 +106,18 @@ function App() {
           </Toolbar>
         </AppBar>
 
-        <Container maxWidth="md" sx={{ marginTop: "20px" }}>
-          <Paper elevation={3} sx={{ padding: "20px", minHeight: "300px" }}>
+        <Container maxWidth="md" sx={{ marginTop: "20px", flex: 1 }}>
+          <Paper
+            elevation={3}
+            sx={{ padding: "20px", minHeight: "300px", height: "100%" }}
+          >
             <div
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                height: "100%",
+              }}
             >
               {messages.map((message, index) => (
                 <div
