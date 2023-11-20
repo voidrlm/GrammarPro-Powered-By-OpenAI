@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import axios
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -60,6 +61,49 @@ function App() {
     setApiKey(e.target.value);
   };
 
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+
+    if (newMessage.trim() !== "") {
+      let newText = "\n \n \n Write this better.";
+      let inputData = newMessage + newText;
+
+      // Make a request to OpenAI GPT-3.5 Chat API
+      try {
+        const response = await axios.post(
+          "https://api.openai.com/v1/chat/completions", // GPT-3.5 Chat API endpoint
+          {
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "system", content: "You are a helpful assistant." },
+              { role: "user", content: inputData }, // Use inputData here
+            ],
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("apiKey")}`, // Use the stored API key
+            },
+          }
+        );
+
+        // Handle the response from the API as needed
+        console.log(response.data.choices[0].message.content);
+        setMessages([
+          ...messages,
+          {
+            text: response.data.choices[0].message.content,
+            sender: "assistant",
+          },
+        ]);
+        setNewMessage("");
+      } catch (error) {
+        // Handle errors
+        console.error("Error making API request:", error);
+      }
+    }
+  };
+
   const theme = createTheme({
     palette: {
       mode: themeMode,
@@ -68,15 +112,6 @@ function App() {
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-
-    if (newMessage.trim() !== "") {
-      setMessages([...messages, { text: newMessage, sender: "user" }]);
-      setNewMessage("");
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
