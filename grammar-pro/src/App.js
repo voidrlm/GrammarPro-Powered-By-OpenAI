@@ -39,7 +39,9 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+
     if (newMessage.trim() !== "") {
       setMessages([...messages, { text: newMessage, sender: "user" }]);
       setNewMessage("");
@@ -119,7 +121,10 @@ function App() {
               ))}
             </div>
           </Paper>
-          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+          <form
+            onSubmit={handleSendMessage}
+            style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+          >
             <TextField
               label="Type a message..."
               variant="outlined"
@@ -127,10 +132,10 @@ function App() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
             />
-            <Button variant="contained" onClick={handleSendMessage}>
-              Send
+            <Button type="submit" variant="contained">
+              Submit
             </Button>
-          </div>
+          </form>
         </Container>
       </div>
     </ThemeProvider>
