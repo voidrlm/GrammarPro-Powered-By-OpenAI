@@ -78,10 +78,7 @@ function App() {
           "https://api.openai.com/v1/chat/completions",
           {
             model: "gpt-3.5-turbo",
-            messages: [
-              { role: "system", content: "You are a helpful assistant." },
-              { role: "user", content: inputData },
-            ],
+            messages: [{ role: "user", content: inputData }],
           },
           {
             headers: {
