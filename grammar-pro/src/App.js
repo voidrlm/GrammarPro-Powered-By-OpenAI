@@ -68,7 +68,7 @@ function App() {
     e.preventDefault();
 
     if (newMessage.trim() !== "") {
-      let newText = "\n \n \n Write this better.";
+      let newText = "\n \n \n Correct spelling mistakes and fix the grammar.";
       let inputData = newMessage + newText;
 
       setLoading(true);
