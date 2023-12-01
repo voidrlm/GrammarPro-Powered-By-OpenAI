@@ -272,7 +272,7 @@ function App() {
             }}
           >
             <TextField
-              label="Type a message..."
+              label="Enter your text to optimize..."
               variant="outlined"
               fullWidth
               value={newMessage}
