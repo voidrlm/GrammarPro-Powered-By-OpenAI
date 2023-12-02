@@ -63,7 +63,15 @@ function App() {
   };
 
   const [loading, setLoading] = useState(false);
-
+  const copyToClipboard = (text) => {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("Copied to clipboard");
+  };
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
@@ -260,10 +268,26 @@ function App() {
                       fontWeight: "bold",
                     }}
                   >
-                    Here is the improved version.
+                    Here is the improved version.{" "}
+                    <button
+                      onClick={() => copyToClipboard(message.text)}
+                      style={{
+                        padding: "5px 5px",
+                        cursor: "pointer",
+                        backgroundColor: "#3498db",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "4px",
+                        outline: "none",
+                        transition: " background-color 0.3s ease",
+                      }}
+                    >
+                      Copy
+                    </button>
                   </div>
                   {message.text}
                 </div>
+
                 {index < messages.length - 1 && (
                   <Divider
                     sx={{
@@ -310,7 +334,7 @@ function App() {
                 borderRadius: "10px",
               }}
             >
-              {loading ? "Sending..." : "Submit"}
+              {loading ? "Loading..." : "Submit"}
             </Button>
           </form>
         </Container>
