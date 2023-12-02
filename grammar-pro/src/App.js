@@ -147,7 +147,10 @@ function App() {
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ color: themeMode === "light" ? "#333" : "#fff" }}
+                sx={{
+                  color: themeMode === "light" ? "#333" : "#fff",
+                  fontWeight: "bold",
+                }}
               >
                 Grammar Pro
               </Typography>
@@ -157,6 +160,7 @@ function App() {
                 sx={{
                   fontSize: "12px",
                   color: themeMode === "light" ? "#555" : "#ccc",
+                  fontWeight: "bold",
                 }}
               >
                 Powered by OpenAI
@@ -190,11 +194,13 @@ function App() {
               <MenuItem onClick={handleToggleTheme}>
                 {themeMode === "light" ? (
                   <>
-                    <Brightness4Icon /> Dark Mode
+                    <Brightness4Icon />
+                    <span style={{ marginLeft: "5px" }}>Dark Mode</span>
                   </>
                 ) : (
                   <>
-                    <Brightness7Icon /> Light Mode
+                    <Brightness7Icon />{" "}
+                    <span style={{ marginLeft: "5px" }}>Light Mode</span>
                   </>
                 )}
               </MenuItem>
@@ -210,7 +216,6 @@ function App() {
 
         <Container
           component="main"
-          maxWidth="xs"
           sx={{
             marginTop: "20px",
             flex: 1,
@@ -246,6 +251,17 @@ function App() {
                     boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
                   }}
                 >
+                  <div
+                    style={{
+                      textAlign: message.sender === "user" ? "right" : "left",
+                      width: "100%",
+                      marginBottom: "10px",
+                      color: "555",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Here is the improved version.
+                  </div>
                   {message.text}
                 </div>
                 {index < messages.length - 1 && (
