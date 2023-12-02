@@ -1,12 +1,15 @@
 # GrammarPro-Powered-By-OpenAI
 Your writing companion for precision! Elevate with seamless grammar correction, punctuation finesse, and context-aware suggestions. Real-time improvement, global language support.
+
 https://imgur.com/7HmmDp7
+
 # How to use
+
 npm install
+
 npm start
 
 ## Screenshots
-
 
 
 Step 1: Open Settings
