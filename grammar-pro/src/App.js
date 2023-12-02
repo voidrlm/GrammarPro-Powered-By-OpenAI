@@ -168,6 +168,7 @@ function App() {
               aria-controls="settings-menu"
               aria-haspopup="true"
               onClick={handleMenuClick}
+              style={{ color: themeMode === "light" ? "#555" : "#ccc" }}
             >
               <SettingsIcon />
             </IconButton>
