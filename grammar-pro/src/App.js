@@ -265,7 +265,7 @@ function App() {
               flexDirection: "row",
               justifyContent: "flex-end",
               alignItems: "center",
-              marginTop: "20px",
+              margin: "20px",
             }}
           >
             <TextField
