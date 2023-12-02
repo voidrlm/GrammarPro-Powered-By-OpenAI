@@ -9,7 +9,7 @@ npm start
 
 
 
-Step 1: Open Sttings
+Step 1: Open Settings
 https://imgur.com/qBp4kea
 
 Step 2: Enter your OpenAI key
